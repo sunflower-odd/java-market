@@ -54,4 +54,16 @@ public class OrderService {
 
         return orderId;
     }
+
+    // получить все заказы пользователя
+    public List<Order> getUserOrders(int userId) {
+        return orderDao.getOrdersByUserId(userId);
+
+    }
+
+    // получить товары в заказе
+    public List<OrderItem> getOrderItems(int orderId) {
+        return orderItemDao.getItemsByOrderId(orderId);
+
+    }
 }
