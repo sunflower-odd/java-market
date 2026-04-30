@@ -9,11 +9,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
+import com.webmarket.beans.Product;
+import com.webmarket.service.ProductService;
 
 @WebServlet("/cart")
 public class CartServlet extends HttpServlet {
 
     private CartService cartService = new CartService();
+    private ProductService productService = new ProductService();
 
     // показать корзину
     @Override
@@ -30,8 +33,9 @@ public class CartServlet extends HttpServlet {
         }
 
         List<Cart> cartItems = cartService.getUserCart(user.getId());
-
+        List<Product> products = productService.getAllProducts();
         request.setAttribute("cartItems", cartItems);
+        request.setAttribute("products", products);
         request.getRequestDispatcher("cart.jsp").forward(request, response);
     }
 

@@ -28,11 +28,20 @@ public class AuthServlet extends HttpServlet {
             User user = userService.login(username, password);
 
             if (user != null) {
-                // сохраняем пользователя в сессию
+
+                // сессия
                 HttpSession session = request.getSession();
+
+                // очищаем старые данные
+                session.invalidate();
+                session = request.getSession(true);
+
+                // сохраняем пользователя
                 session.setAttribute("user", user);
 
+                // редирект на products
                 response.sendRedirect("products");
+
             } else {
                 response.sendRedirect("login.jsp?error=1");
             }
@@ -48,13 +57,14 @@ public class AuthServlet extends HttpServlet {
             boolean success = userService.register(username, password, email);
 
             if (success) {
-                response.sendRedirect("login.jsp");
+                response.sendRedirect("login.jsp?success=1");
+
             } else {
-                response.sendRedirect("register.jsp?error=1");
+                response.sendRedirect("register.jsp?error=exists");
             }
         }
 
-        // выход из лк
+        // logout
         else if ("logout".equals(action)) {
 
             HttpSession session = request.getSession(false);
@@ -63,6 +73,12 @@ public class AuthServlet extends HttpServlet {
                 session.invalidate();
             }
 
+            // редирект на логин
+            response.sendRedirect("login.jsp");
+        }
+
+        // fallback
+        else {
             response.sendRedirect("login.jsp");
         }
     }

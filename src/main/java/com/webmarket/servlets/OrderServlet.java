@@ -32,7 +32,6 @@ public class OrderServlet extends HttpServlet {
 
         // передаём список заказов в JSP
         request.setAttribute("orders", orders);
-
         request.getRequestDispatcher("orders.jsp").forward(request, response);
     }
 
