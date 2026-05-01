@@ -4,6 +4,8 @@ import com.webmarket.beans.User;
 import com.webmarket.dao.UserDao;
 import com.webmarket.util.PasswordUtil;
 
+import java.util.List;
+
 public class UserService {
 
     private UserDao userDao = new UserDao();
@@ -39,5 +41,16 @@ public class UserService {
         user.setPassword(PasswordUtil.hashPassword(password));
 
         return userDao.save(user);
+    }
+
+    // получить всех пользователей (для админа)
+
+    public List<User> getAllUsers() {
+        return userDao.findAll();
+    }
+
+    // удалить пользователя (админ)
+    public boolean deleteUser(int id) {
+        return userDao.deleteById(id);
     }
 }

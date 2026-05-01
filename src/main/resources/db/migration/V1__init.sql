@@ -1,6 +1,3 @@
-CREATE DATABASE IF NOT EXISTS web_market;
-USE web_market;
-
 -- USERS
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,

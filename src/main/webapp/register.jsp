@@ -1,4 +1,6 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <jsp:include page="/WEB-INF/header.jsp" />
+
 
 <link rel="stylesheet" href="css/style.css">
 
