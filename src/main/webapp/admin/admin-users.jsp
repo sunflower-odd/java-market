@@ -16,7 +16,7 @@
 <% } %>
 
 <% if (users == null || users.isEmpty()) { %>
-    <p>No users found</p>
+    <p>Пользователи не найдены</p>
 
 <% } else { %>
     <% for (User u : users) { %>
