@@ -24,7 +24,7 @@
 
     <% if (user != null) { %>
 
-        Welcome, <b><%= user.getUsername() %></b>
+        Добро пожаловать, <b><%= user.getUsername() %></b>
         |
         <form action="auth" method="post" style="display:inline;">
             <input type="hidden" name="action" value="logout">

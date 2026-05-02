@@ -65,11 +65,7 @@ public class AdminProductServlet extends HttpServlet {
             String name = request.getParameter("name");
             String description = request.getParameter("description");
             BigDecimal price = new BigDecimal(request.getParameter("price"));
-//            String categoryParam = request.getParameter("categoryId");
             int categoryId = Integer.parseInt(request.getParameter("categoryId"));
-//            int categoryId = (categoryParam == null || categoryParam.isEmpty())
-//                    ? 0
-//                    : Integer.parseInt(categoryParam);
             productService.createProduct(name, description, price, categoryId);
 
             response.sendRedirect(request.getContextPath() + "/admin/products");

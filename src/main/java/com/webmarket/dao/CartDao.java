@@ -33,7 +33,7 @@ public class CartDao {
     public List<Cart> getCartByUserId(int userId) {
         List<Cart> cartItems = new ArrayList<>();
 
-        String sql = "SELECT * FROM cart WHERE user_id = ?";
+        String sql = "SELECT user_id, product_id, SUM(quantity) as quantity FROM cart WHERE user_id = ? GROUP by user_id, product_id";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -44,7 +44,7 @@ public class CartDao {
 
             while (rs.next()) {
                 Cart cart = new Cart();
-                cart.setId(rs.getInt("id"));
+                //cart.setId(rs.getInt("id"));
                 cart.setUserId(rs.getInt("user_id"));
                 cart.setProductId(rs.getInt("product_id"));
                 cart.setQuantity(rs.getInt("quantity"));

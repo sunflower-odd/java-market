@@ -28,10 +28,13 @@
             <p><b>User ID:</b> <%= o.getUserId() %></p>
 
             <!-- посмотреть детали заказа -->
+            <!--
             <form action="order" method="get">
+            -->
+            <form action="${pageContext.request.contextPath}/order" method="get">
 
                 <input type="hidden" name="orderId" value="<%= o.getId() %>">
-                <input type="hidden" name="action" value="details">
+                <input type="hidden" name="action" value="view">
 
                 <button type="submit">Посмотреть детали</button>
 

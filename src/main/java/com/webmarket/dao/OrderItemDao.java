@@ -41,7 +41,7 @@ public class OrderItemDao {
     public List<OrderItem> getItemsByOrderId(int orderId) {
         List<OrderItem> items = new ArrayList<>();
 
-        String sql = "SELECT * FROM order_items WHERE order_id = ?";
+        String sql = "SELECT order_id, product_id, SUM(quantity) AS quantity, SUM(price) as price FROM order_items WHERE order_id = ? GROUP BY order_id, product_id";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -54,7 +54,7 @@ public class OrderItemDao {
             while (rs.next()) {
                 OrderItem item = new OrderItem();
 
-                item.setId(rs.getInt("id"));
+                // item.setId(rs.getInt("id"));
                 item.setOrderId(rs.getInt("order_id"));
                 item.setProductId(rs.getInt("product_id"));
                 item.setQuantity(rs.getInt("quantity"));
