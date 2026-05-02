@@ -49,8 +49,8 @@ GRANT ALL PRIVILEGES ON web_market.* TO 'app_user'@'localhost';
 Запустить сервер ./startup.sh (Linux/Mac) или startup.bat (Windows) (остановить - ./shutdown.sh)
 3. Миграции выполняются автоматически при запуске приложения
 4. Собрать проект:
-mvn clean package - сбилдить проект и создать WAR файл в папке target
-cp target/java-market.war ~/ваша_директория_с_tomcat/webapps/ - скопировать WAR файл в папку webapps Tomcat
+- `mvn clean package` - сбилдить проект и создать WAR файл в папке target
+- `cp target/java-market.war ~/ваша_директория_с_tomcat/webapps/` - скопировать WAR файл в папку webapps Tomcat
 5. Открыть браузер и перейти по адресу http://localhost:8080/java-market
 6. Зарегистрироваться и начать пользоваться приложением!
 7. Для того, чтобы зайти в админ панель, используем учетные данные по умолчанию:
