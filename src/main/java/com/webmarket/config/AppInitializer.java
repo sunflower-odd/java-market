@@ -1,6 +1,5 @@
 package com.webmarket.config;
 
-import com.webmarket.util.DBBootstrap;
 import com.webmarket.util.DBMigration;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
