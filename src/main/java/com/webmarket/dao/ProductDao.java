@@ -9,26 +9,35 @@ import java.util.List;
 
 public class ProductDao {
 
+    // единый mapper для ResultSet
+    private Product map(ResultSet rs) throws SQLException {
+        Product p = new Product();
+
+        p.setId(rs.getInt("id"));
+        p.setName(rs.getString("name"));
+        p.setDescription(rs.getString("description"));
+        p.setPrice(rs.getBigDecimal("price"));
+        p.setCategoryId(rs.getInt("category_id"));
+        p.setCategoryName(rs.getString("category_name"));
+
+        return p;
+    }
+
     // получить все товары
     public List<Product> findAll() {
         List<Product> products = new ArrayList<>();
 
-        String sql = "SELECT * FROM products";
+        // CHANGED: убрали лишнюю ; в конце + оставили JOIN
+        String sql =
+                "SELECT p.id, p.name, p.description, p.price, p.category_id, c.name AS category_name " +
+                        "FROM products p LEFT JOIN categories c ON p.category_id = c.id";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
-                Product p = new Product();
-
-                p.setId(rs.getInt("id"));
-                p.setName(rs.getString("name"));
-                p.setDescription(rs.getString("description"));
-                p.setPrice(rs.getBigDecimal("price"));
-                p.setCategoryId(rs.getInt("category_id"));
-
-                products.add(p);
+                products.add(map(rs));
             }
 
         } catch (SQLException e) {
@@ -40,7 +49,10 @@ public class ProductDao {
 
     // получить товар по id
     public Product findById(int id) {
-        String sql = "SELECT * FROM products WHERE id = ?";
+
+        String sql =
+                "SELECT p.id, p.name, p.description, p.price, p.category_id, c.name AS category_name " +
+                        "FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE p.id = ?";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -50,15 +62,8 @@ public class ProductDao {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                Product p = new Product();
-
-                p.setId(rs.getInt("id"));
-                p.setName(rs.getString("name"));
-                p.setDescription(rs.getString("description"));
-                p.setPrice(rs.getBigDecimal("price"));
-                p.setCategoryId(rs.getInt("category_id"));
-
-                return p;
+                // CHANGED: используем общий mapper
+                return map(rs);
             }
 
         } catch (SQLException e) {
@@ -72,7 +77,9 @@ public class ProductDao {
     public List<Product> findByCategory(int categoryId) {
         List<Product> products = new ArrayList<>();
 
-        String sql = "SELECT * FROM products WHERE category_id = ?";
+        String sql =
+                "SELECT p.id, p.name, p.description, p.price, p.category_id, c.name AS category_name " +
+                        "FROM products p LEFT JOIN categories c ON p.category_id = c.id WHERE p.category_id = ?";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -82,15 +89,7 @@ public class ProductDao {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Product p = new Product();
-
-                p.setId(rs.getInt("id"));
-                p.setName(rs.getString("name"));
-                p.setDescription(rs.getString("description"));
-                p.setPrice(rs.getBigDecimal("price"));
-                p.setCategoryId(rs.getInt("category_id"));
-
-                products.add(p);
+                products.add(map(rs));
             }
 
         } catch (SQLException e) {
@@ -110,7 +109,7 @@ public class ProductDao {
             stmt.setString(1, product.getName());
             stmt.setString(2, product.getDescription());
             stmt.setBigDecimal(3, product.getPrice());
-            // stmt.setInt(4, product.getCategoryId());
+
             if (product.getCategoryId() != null) {
                 stmt.setInt(4, product.getCategoryId());
             } else {

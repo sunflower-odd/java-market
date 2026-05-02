@@ -1,6 +1,7 @@
 package com.webmarket.servlets;
 
 import com.webmarket.service.ProductService;
+import com.webmarket.service.CategoryService;
 import com.webmarket.beans.Product;
 
 import javax.servlet.ServletException;
@@ -13,7 +14,7 @@ import java.util.List;
 public class ProductServlet extends HttpServlet {
 
     private ProductService productService = new ProductService();
-
+    private CategoryService categoryService = new CategoryService();
 
     // просмотр товаров
     @Override
@@ -22,6 +23,8 @@ public class ProductServlet extends HttpServlet {
 
         String categoryIdParam = request.getParameter("categoryId");
         String productIdParam = request.getParameter("id");
+        // для фильтрации по категориям
+        request.setAttribute("categories", categoryService.getAllCategories());
 
         //  отдельный товар
         if (productIdParam != null) {
@@ -37,11 +40,11 @@ public class ProductServlet extends HttpServlet {
 
         List<Product> products;
 
+        System.out.println("categoryIdParam = [" + categoryIdParam + "]"); // удалить
+
         // фильтр по категории
-        if (categoryIdParam != null) {
-
+        if (categoryIdParam != null && !categoryIdParam.isEmpty()) {
             int categoryId = Integer.parseInt(categoryIdParam);
-
             products = productService.getByCategory(categoryId);
         }
         // все товары

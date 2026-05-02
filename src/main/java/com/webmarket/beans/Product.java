@@ -8,6 +8,7 @@ public class Product {
     private String description;
     private BigDecimal price;
     private Integer categoryId;
+    private String categoryName;
 
     public Product() {}
 
@@ -33,4 +34,12 @@ public class Product {
 
     public Integer getCategoryId() { return categoryId; }
     public void setCategoryId(Integer categoryId) { this.categoryId = categoryId; }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
 }
