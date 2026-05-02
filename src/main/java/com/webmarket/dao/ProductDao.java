@@ -110,7 +110,12 @@ public class ProductDao {
             stmt.setString(1, product.getName());
             stmt.setString(2, product.getDescription());
             stmt.setBigDecimal(3, product.getPrice());
-            stmt.setInt(4, product.getCategoryId());
+            // stmt.setInt(4, product.getCategoryId());
+            if (product.getCategoryId() != null) {
+                stmt.setInt(4, product.getCategoryId());
+            } else {
+                stmt.setNull(4, java.sql.Types.INTEGER);
+            }
 
             return stmt.executeUpdate() > 0;
 

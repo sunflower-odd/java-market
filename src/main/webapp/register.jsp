@@ -19,10 +19,10 @@
 
     <input type="hidden" name="action" value="register">
 
-    <label>Username:</label><br>
+    <label>Имя пользователя:</label><br>
     <input type="text" name="username" required><br>
 
-    <label>Password:</label><br>
+    <label>Пароль:</label><br>
     <input type="password" name="password" required><br>
 
     <label>Email:</label><br>
@@ -32,8 +32,8 @@
 </form>
 
 <p>
-    Already have an account?
-    <a href="login.jsp">Login</a>
+    Уже есть личный кабинет?
+    <a href="login.jsp">Вход</a>
 </p>
 
 <jsp:include page="/WEB-INF/footer.jsp" />

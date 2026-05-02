@@ -22,7 +22,7 @@ public class AdminUserServlet extends HttpServlet {
         User admin = (User) request.getSession().getAttribute("user");
 
         if (admin == null || !"ADMIN".equals(admin.getRole())) {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
             return;
         }
 
@@ -40,7 +40,7 @@ public class AdminUserServlet extends HttpServlet {
         User admin = (session != null) ? (User) session.getAttribute("user") : null;
 
         if (admin == null || !"ADMIN".equals(admin.getRole())) {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
             return;
         }
 
@@ -51,11 +51,11 @@ public class AdminUserServlet extends HttpServlet {
             int userId = Integer.parseInt(request.getParameter("userId"));
             // админ не может удалить сам себя
             if (userId == admin.getId()) {
-                response.sendRedirect("admin/users?error=selfdelete");
+                response.sendRedirect(request.getContextPath() + "/admin/users?error=selfdelete");
                 return;
             }
             userService.deleteUser(userId);
-            response.sendRedirect("admin/users");
+            response.sendRedirect(request.getContextPath() + "/admin/users");
         }
 
     }

@@ -3,21 +3,21 @@
 
 <meta charset="UTF-8">
 
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 
 <%
     User user = (User) session.getAttribute("user");
 %>
 <div class="nav">
 
-    <a href="products">Products</a>
-    <a href="cart">Cart</a>
-    <a href="order">Orders</a>
+    <a href="${pageContext.request.contextPath}/products">Продукты</a>
+    <a href="${pageContext.request.contextPath}/cart">Корзина</a>
+    <a href="${pageContext.request.contextPath}/order">Заказы</a>
 
     <%-- ссылки только для ADMIN --%>
     <% if (user != null && "ADMIN".equals(user.getRole())) { %>
-        | <a href="admin/users">Users</a>
-        | <a href="admin/products">Products Admin</a>
+        | <a href="${pageContext.request.contextPath}/admin/users">Управление пользователями</a>
+        | <a href="${pageContext.request.contextPath}/admin/products">Управление продуктами</a>
     <% } %>
 
     <span style="float:right;">
@@ -34,9 +34,9 @@
         </form>
     <% } else { %>
 
-        <a href="login.jsp">Login</a>
+        <a href="login.jsp">Логин</a>
         |
-        <a href="register.jsp">Register</a>
+        <a href="register.jsp">Регистрация</a>
 
     <% } %>
     </span>

@@ -3,6 +3,8 @@ package com.webmarket.servlets;
 import com.webmarket.beans.Product;
 import com.webmarket.beans.User;
 import com.webmarket.service.ProductService;
+import com.webmarket.beans.Category;
+import com.webmarket.service.CategoryService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +21,7 @@ import java.util.List;
 public class AdminProductServlet extends HttpServlet {
 
     private ProductService productService = new ProductService();
+    private CategoryService categoryService = new CategoryService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -28,40 +31,48 @@ public class AdminProductServlet extends HttpServlet {
         User admin = (session != null) ? (User) session.getAttribute("user") : null;
 
         if (admin == null || !"ADMIN".equals(admin.getRole())) {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
             return;
         }
 
         List<Product> products = productService.getAllProducts();
+        List<Category> categories = categoryService.getAllCategories();
 
+        request.setAttribute("categories", categories);
         request.setAttribute("products", products);
-        request.getRequestDispatcher("admin-products.jsp").forward(request, response);
+        request.getRequestDispatcher("/admin/admin-products.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // иначе ломается кодировка
+        request.setCharacterEncoding("UTF-8");
 
         HttpSession session = request.getSession(false);
         User admin = (session != null) ? (User) session.getAttribute("user") : null;
 
         if (admin == null || !"ADMIN".equals(admin.getRole())) {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
             return;
         }
 
         String action = request.getParameter("action");
 
-        // создать товар
+        // создать товар вручную
         if ("create".equals(action)) {
 
             String name = request.getParameter("name");
             String description = request.getParameter("description");
             BigDecimal price = new BigDecimal(request.getParameter("price"));
+//            String categoryParam = request.getParameter("categoryId");
+            int categoryId = Integer.parseInt(request.getParameter("categoryId"));
+//            int categoryId = (categoryParam == null || categoryParam.isEmpty())
+//                    ? 0
+//                    : Integer.parseInt(categoryParam);
+            productService.createProduct(name, description, price, categoryId);
 
-            productService.createProduct(name, description, price, 0);
-
-            response.sendRedirect("admin/products");
+            response.sendRedirect(request.getContextPath() + "/admin/products");
         }
 
         // удалить товар
@@ -71,7 +82,7 @@ public class AdminProductServlet extends HttpServlet {
 
             productService.deleteProduct(id);
 
-            response.sendRedirect("admin/products");
+            response.sendRedirect(request.getContextPath() + "/admin/products");
         }
     }
 }

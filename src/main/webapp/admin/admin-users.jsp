@@ -5,14 +5,14 @@
 
 <jsp:include page="/WEB-INF/header.jsp" />
 
-<h1>Admin Panel - Users</h1>
+<h1>Панель управления - Пользователи</h1>
 
 <%
     List<User> users = (List<User>) request.getAttribute("users");
 %>
 
 <% if ("selfdelete".equals(request.getParameter("error"))) { %>
-    <p style="color:red;">You cannot delete yourself</p>
+    <p style="color:red;">Вы не можете удалить себя</p>
 <% } %>
 
 <% if (users == null || users.isEmpty()) { %>
@@ -26,7 +26,7 @@
             <p>Email: <%= u.getEmail() %></p>
             <p>Role: <%= u.getRole() %></p>
 
-            <form action="admin/users" method="post">
+            <form action="${pageContext.request.contextPath}/admin/users" method="post">
                 <input type="hidden" name="action" value="delete">
                 <input type="hidden" name="userId" value="<%= u.getId() %>">
                 <button type="submit" style="background:red;">

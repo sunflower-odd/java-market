@@ -5,7 +5,7 @@
 
 <jsp:include page="/WEB-INF/header.jsp" />
 
-<h1>Your Orders</h1>
+<h1>Ваши заказы</h1>
 
 <%
     List<Order> orders = (List<Order>) request.getAttribute("orders");
@@ -13,7 +13,7 @@
 
 <% if (orders == null || orders.isEmpty()) { %>
 
-    <p>You have no orders yet</p>
+    <p>У вас пока нет заказов</p>
 
 <% } else { %>
 
@@ -33,7 +33,7 @@
                 <input type="hidden" name="orderId" value="<%= o.getId() %>">
                 <input type="hidden" name="action" value="details">
 
-                <button type="submit">View details</button>
+                <button type="submit">Посмотреть детали</button>
 
             </form>
 

@@ -30,7 +30,7 @@
 
     <div class="card">
         <h3>
-            <%= (product != null ? product.getName() : "Unknown product") %>
+            <%= (product != null ? product.getName() : "Неизвестный продукт") %>
         </h3>
 
         <p>
