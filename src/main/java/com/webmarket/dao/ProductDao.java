@@ -27,7 +27,6 @@ public class ProductDao {
     public List<Product> findAll() {
         List<Product> products = new ArrayList<>();
 
-        // CHANGED: убрали лишнюю ; в конце + оставили JOIN
         String sql =
                 "SELECT p.id, p.name, p.description, p.price, p.category_id, c.name AS category_name " +
                         "FROM products p LEFT JOIN categories c ON p.category_id = c.id";
@@ -62,7 +61,6 @@ public class ProductDao {
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next()) {
-                // CHANGED: используем общий mapper
                 return map(rs);
             }
 

@@ -7,7 +7,6 @@
 
 <h1>Продукты</h1>
 
-<%-- ❗ NEW: список категорий для фильтра --%>
 <%
     List<Category> categories = (List<Category>) request.getAttribute("categories");
     String selectedCategory = request.getParameter("categoryId");

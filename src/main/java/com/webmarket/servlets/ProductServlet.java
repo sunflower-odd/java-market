@@ -40,8 +40,6 @@ public class ProductServlet extends HttpServlet {
 
         List<Product> products;
 
-        System.out.println("categoryIdParam = [" + categoryIdParam + "]"); // удалить
-
         // фильтр по категории
         if (categoryIdParam != null && !categoryIdParam.isEmpty()) {
             int categoryId = Integer.parseInt(categoryIdParam);

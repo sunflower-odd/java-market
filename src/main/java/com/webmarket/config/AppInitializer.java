@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebListener;
 
 @WebListener
 public class AppInitializer implements ServletContextListener {
+    // используется для выполнения миграций при запуске приложения
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
